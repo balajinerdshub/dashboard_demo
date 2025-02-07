@@ -62,8 +62,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Average Daily Demand"
-                count="2,300"
+                title="Peak Withdrawal Day"
+                count="34k"
                 percentage={{
                   color: "success",
                   amount: "+3%",
@@ -76,9 +76,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
-                title="Peak Withdrawal Day"
-                count="34k"
+                icon="📈"
+                title="Average Daily Demand"
+                count="2,300"
                 percentage={{
                   color: "success",
                   amount: "+1%",
@@ -91,7 +91,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
+                icon="ⓘ"
                 title="Refill Alerts"
                 count="10"
                 percentage={{
