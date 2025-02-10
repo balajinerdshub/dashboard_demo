@@ -1,60 +1,111 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
-
-// Material Dashboard 2 React components
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
-// Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+
+  // State for filters
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [atmId, setAtmId] = useState("");
+
+  // Dummy ATM IDs
+  const atmOptions = ["ATM_001", "ATM_002", "ATM_003", "ATM_004"];
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
+        {/* Filter Cards Section */}
+        <Grid container spacing={2} mb={3}>
+          {/* Start Date Card */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Card>
+              <CardContent>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Start Date
+                </Typography>
+                <TextField
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  size="small"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* End Date Card */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Card>
+              <CardContent>
+                <Typography variant="subtitle2" color="textSecondary">
+                  End Date
+                </Typography>
+                <TextField
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  size="small"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Select ATM ID Card */}
+          <Grid item xs={12} md={4} lg={2}>
+            <Card>
+              <CardContent>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Select ATM ID
+                </Typography>
+                <TextField
+                  select
+                  fullWidth
+                  size="small"
+                  value={atmId}
+                  onChange={(e) => setAtmId(e.target.value)}
+                  InputLabelProps={{ shrink: true }}
+                >
+                  {atmOptions.map((id) => (
+                    <MenuItem key={id} value={id}>
+                      {id}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+
+        {/* Statistics Cards */}
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Total Cash Withdrawn "
+                title="Total ATM Withdrawals"
                 count="50,00,000"
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
+                percentage={{ color: "success", amount: "+55%", label: "than last week" }}
               />
             </MDBox>
           </Grid>
@@ -62,13 +113,9 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Peak Withdrawal Day"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
+                title="Highest Cash Withdrawal Day"
+                count="Monday"
+                percentage={{ color: "success", amount: "+3%", label: "than last month" }}
               />
             </MDBox>
           </Grid>
@@ -79,11 +126,7 @@ function Dashboard() {
                 icon="📈"
                 title="Average Daily Demand"
                 count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
+                percentage={{ color: "success", amount: "+1%", label: "than yesterday" }}
               />
             </MDBox>
           </Grid>
@@ -94,15 +137,13 @@ function Dashboard() {
                 icon="ⓘ"
                 title="Refill Alerts"
                 count="10"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
+                percentage={{ color: "success", amount: "", label: "Just updated" }}
               />
             </MDBox>
           </Grid>
         </Grid>
+
+        {/* Charts Section */}
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
@@ -110,7 +151,6 @@ function Dashboard() {
                 <ReportsBarChart
                   color="info"
                   title="Transaction Patterns by Day"
-                  description=""
                   date="sent 2 days ago"
                   chart={reportsBarChartData}
                 />
@@ -121,7 +161,7 @@ function Dashboard() {
                 <ReportsLineChart
                   color="success"
                   title="Model_1"
-                  description=""
+                  description="Performance Score: 30%"
                   date="updated 4 min ago"
                   chart={sales}
                 />
@@ -132,21 +172,11 @@ function Dashboard() {
                 <ReportsLineChart
                   color="dark"
                   title="Model_2"
-                  description=""
+                  description="Performance Score: 12%"
                   date="just updated"
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <blank />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <blank />
             </Grid>
           </Grid>
         </MDBox>

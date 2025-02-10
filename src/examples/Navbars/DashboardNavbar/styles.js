@@ -111,7 +111,7 @@ const navbarIconButton = ({ typography: { size }, breakpoints }) => ({
     fontSize: `${size.xl} !important`,
   },
 
-  "& .MuiTypography-root": {
+  "& .": {
     display: "none",
 
     [breakpoints.up("sm")]: {

@@ -67,18 +67,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Billing",
+    name: "Data Loader",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "",
     component: <Billing />,
   },
   {
     type: "collapse",
-    name: "RTL",
+    name: "Models",
     key: "rtl",
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
+    route: "",
     component: <RTL />,
   },
   {
